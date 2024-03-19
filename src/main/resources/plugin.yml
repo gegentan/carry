@@ -1,6 +1,6 @@
 name: Carry
 version: 1.0.0
-main: org.gegentan.paper_plugin.Main
+main: com.gegentan.paper_plugin.Main
 description: A plugin that makes you able to carry entites! (Like the "Carry on" mod)
 author: gegentan
 api-version: '1.20'

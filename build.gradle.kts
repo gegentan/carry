@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "org.gegentan.carry"
+group = "com.gegentan.carry"
 version = "1.0"
 
 repositories {

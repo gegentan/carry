@@ -1,4 +1,4 @@
-package org.gegentan.paper_plugin;
+package com.gegentan.paper_plugin;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
