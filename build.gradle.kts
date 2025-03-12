@@ -6,7 +6,6 @@ group = "com.gegentan.carry"
 version = "1.0"
 
 repositories {
-    mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
@@ -15,9 +14,5 @@ dependencies {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
-
-tasks.test {
-    useJUnitPlatform()
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }

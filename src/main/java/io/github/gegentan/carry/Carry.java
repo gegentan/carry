@@ -1,7 +1,7 @@
-package com.gegentan.paper_plugin;
+package io.github.gegentan.carry;
 
-import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,40 +15,39 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class Main extends JavaPlugin implements Listener {
-
+public class Carry extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
-        getLogger().info("Enabled Carry 1.0! (This is my first plugin!)");
+        getLogger().info("Enabled Carry 1.0!");
     }
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Entity clickedEntity = event.getRightClicked();
-        if (player.getPassengers().isEmpty() && player.isSneaking()) {
+        if (player.isSneaking() && player.getPassengers().isEmpty()) {
             player.addPassenger(clickedEntity);
+            event.setCancelled(true);
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) { // STILL GETTING EXECUTED TWICE (SOMETIMES ONCE WHEN HOLDING AN ITEM)!!!!!
         Player player = event.getPlayer();
-
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
             List<Entity> passengers = player.getPassengers();
             if (!passengers.isEmpty()) {
-                Entity passenger = passengers.get(0);
+                Entity passenger = passengers.getFirst();
                 RayTraceResult result = player.rayTraceBlocks(5);
 
                 if (result != null && result.getHitBlock() != null) {
                     Location location = result.getHitBlock().getLocation();
-                    location.add(new Vector(0, 1, 0));
+                    location.add(new Vector(0.5, 1, 0.5));
                     passenger.leaveVehicle();
                     passenger.teleport(location);
-
                 }
+                event.setCancelled(true);
             }
         }
     }
